@@ -1,10 +1,11 @@
+import { SearchParams } from '../utils/searchHelper';
 import { Sex } from './Sex';
 
 export interface FiltersContextType {
   query: string;
   sex: Sex;
   centuries: string[];
-  sortField: string;
-  sortOrder: string;
-  updateSearchParams: () => void;
+  sort: string;
+  order: string;
+  updateSearchParams: (params: SearchParams) => void;
 }

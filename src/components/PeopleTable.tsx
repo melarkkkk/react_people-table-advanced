@@ -14,19 +14,19 @@ type Props = {
 /* eslint-disable jsx-a11y/control-has-associated-label */
 export const PeopleTable: React.FC<Props> = ({ selectedPerson }) => {
   const { visiblePeople } = useContext(PeopleContext);
-  const { sortField, sortOrder } = useContext(FiltersContext);
+  const { sort, order } = useContext(FiltersContext);
 
   const getSortParams = (value: SortField) => {
     let params = {};
 
-    if (sortField !== value) {
-      params = { sortField: value, sortOrder: null };
-    } else if (sortOrder === '') {
-      params = { sortOrder: 'desc' };
-    } else if (sortOrder === 'desc') {
-      params = { sortField: null, sortOrder: null };
+    if (sort !== value) {
+      params = { sort: value, order: null };
+    } else if (order === '') {
+      params = { order: 'desc' };
+    } else if (order === 'desc') {
+      params = { sort: null, order: null };
     } else {
-      params = { sortOrder: 'desc' };
+      params = { order: 'desc' };
     }
 
     return params;
@@ -50,10 +50,9 @@ export const PeopleTable: React.FC<Props> = ({ selectedPerson }) => {
                   <SearchLink params={params} className="icon has-text-link">
                     <i
                       className={classNames('fas', {
-                        'fa-sort': sortField !== value,
-                        'fa-sort-up': sortField === value && !sortOrder,
-                        'fa-sort-down':
-                          sortField === value && sortOrder === 'desc',
+                        'fa-sort': sort !== value,
+                        'fa-sort-up': sort === value && !order,
+                        'fa-sort-down': sort === value && order === 'desc',
                       })}
                     />
                   </SearchLink>

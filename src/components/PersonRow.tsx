@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Person } from '../types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 type Props = {
   person: Person;
@@ -19,6 +19,8 @@ export const PersonRow: React.FC<Props> = ({ person, isSelected }) => {
     father,
     slug,
   } = person;
+    const location = useLocation();
+  const search = location.search;
 
   return (
     <tr
@@ -27,7 +29,7 @@ export const PersonRow: React.FC<Props> = ({ person, isSelected }) => {
     >
       <td>
         <Link
-          to={`/people/${slug}`}
+          to={`/people/${slug}${search}`}
           className={classNames({ 'has-text-danger': sex === 'f' })}
         >
           {name}
@@ -40,7 +42,7 @@ export const PersonRow: React.FC<Props> = ({ person, isSelected }) => {
 
       {mother ? (
         <td>
-          <Link to={`/people/${mother.slug}`} className="has-text-danger">
+          <Link to={`/people/${mother.slug}${search}`} className="has-text-danger">
             {mother.name}
           </Link>
         </td>
@@ -50,7 +52,7 @@ export const PersonRow: React.FC<Props> = ({ person, isSelected }) => {
 
       {father ? (
         <td>
-          <Link to={`/people/${father.slug}`}>{father.name}</Link>
+          <Link to={`/people/${father.slug}${search}`}>{father.name}</Link>
         </td>
       ) : (
         <td>{fatherName ? fatherName : '-'}</td>

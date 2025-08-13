@@ -21,8 +21,7 @@ export const PeopleContext = createContext<PeopleContextType>({
 });
 
 export const PeopleContextProvider: React.FC<Props> = ({ children }) => {
-  const { query, sex, centuries, sortField, sortOrder } =
-    useContext(FiltersContext);
+  const { query, sex, centuries, sort, order } = useContext(FiltersContext);
 
   const [people, setPeople] = useState<Person[]>([]);
   const [visiblePeople, setVisiblePeople] = useState<Person[]>([]);
@@ -67,9 +66,15 @@ export const PeopleContextProvider: React.FC<Props> = ({ children }) => {
     let result = [...people];
 
     if (query.trim()) {
-      result = result.filter(person =>
-        person.name.toLowerCase().includes(query.trim().toLowerCase()),
-      );
+      result = result.filter(person => {
+        const normalizedQuery = query.trim().toLowerCase();
+
+        return (
+          person.name.includes(normalizedQuery) ||
+          person.motherName?.includes(normalizedQuery) ||
+          person.fatherName?.includes(normalizedQuery)
+        );
+      });
     }
 
     if (centuries.length) {
@@ -84,29 +89,29 @@ export const PeopleContextProvider: React.FC<Props> = ({ children }) => {
       result = result.filter(person => person.sex === sex);
     }
 
-    if (sortField) {
+    if (sort) {
       result.sort((a, b) => {
-        const valA = a[sortField as keyof Person];
-        const valB = b[sortField as keyof Person];
+        const valA = a[sort as keyof Person];
+        const valB = b[sort as keyof Person];
 
-        if (sortField === SortField.Born || sortField === SortField.Died) {
+        if (sort === SortField.Born || sort === SortField.Died) {
           return ((valA as number) || 0) - ((valB as number) || 0);
         }
 
-        if (sortField === SortField.Name || sortField === SortField.Sex) {
+        if (sort === SortField.Name || sort === SortField.Sex) {
           return String(valA).localeCompare(String(valB));
         }
 
         return 0;
       });
 
-      if (sortOrder === 'desc') {
+      if (order === 'desc') {
         result.reverse();
       }
     }
 
     return result;
-  }, [people, query, centuries, sex, sortField, sortOrder]);
+  }, [people, query, centuries, sex, sort, order]);
 
   useEffect(() => {
     setVisiblePeople(processedPeople);
