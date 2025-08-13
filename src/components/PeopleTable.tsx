@@ -51,8 +51,8 @@ export const PeopleTable: React.FC<Props> = ({ selectedPerson }) => {
                     <i
                       className={classNames('fas', {
                         'fa-sort': !sortField,
-                        'fa-sort-up': sortField && !sortOrder,
-                        'fa-sort-down': sortOrder === 'desc',
+                        'fa-sort-up': sortField === value && !sortOrder,
+                        'fa-sort-down': sortField === value && sortOrder === 'desc',
                       })}
                     />
                   </SearchLink>
