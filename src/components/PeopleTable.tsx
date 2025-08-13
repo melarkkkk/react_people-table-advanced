@@ -50,9 +50,10 @@ export const PeopleTable: React.FC<Props> = ({ selectedPerson }) => {
                   <SearchLink params={params} className="icon has-text-link">
                     <i
                       className={classNames('fas', {
-                        'fa-sort': !sortField,
+                        'fa-sort': sortField !== value,
                         'fa-sort-up': sortField === value && !sortOrder,
-                        'fa-sort-down': sortField === value && sortOrder === 'desc',
+                        'fa-sort-down':
+                          sortField === value && sortOrder === 'desc',
                       })}
                     />
                   </SearchLink>
