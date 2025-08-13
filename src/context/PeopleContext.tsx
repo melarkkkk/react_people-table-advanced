@@ -70,9 +70,9 @@ export const PeopleContextProvider: React.FC<Props> = ({ children }) => {
         const normalizedQuery = query.trim().toLowerCase();
 
         return (
-          person.name.includes(normalizedQuery) ||
-          person.motherName?.includes(normalizedQuery) ||
-          person.fatherName?.includes(normalizedQuery)
+          person.name.toLowerCase().includes(normalizedQuery) ||
+          person.motherName?.toLowerCase().includes(normalizedQuery) ||
+          person.fatherName?.toLowerCase().includes(normalizedQuery)
         );
       });
     }

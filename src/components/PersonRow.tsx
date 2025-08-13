@@ -19,7 +19,7 @@ export const PersonRow: React.FC<Props> = ({ person, isSelected }) => {
     father,
     slug,
   } = person;
-    const location = useLocation();
+  const location = useLocation();
   const search = location.search;
 
   return (
@@ -42,7 +42,10 @@ export const PersonRow: React.FC<Props> = ({ person, isSelected }) => {
 
       {mother ? (
         <td>
-          <Link to={`/people/${mother.slug}${search}`} className="has-text-danger">
+          <Link
+            to={`/people/${mother.slug}${search}`}
+            className="has-text-danger"
+          >
             {mother.name}
           </Link>
         </td>
